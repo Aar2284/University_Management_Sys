@@ -1,0 +1,37 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="funky-app-container" style="display: flex; justify-content: center; align-items: center; min-height: 70vh;">
+
+    <div style="background: white; border-radius: 40px; padding: 60px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); text-align: center; max-width: 600px; width: 100%; border: 1px solid #f1f5f9;">
+        
+        <div style="font-size: 5rem; margin-bottom: 30px;">🎉</div>
+        
+        <h2 style="color: #1e293b; font-size: 2.5rem; font-weight: 800; margin-bottom: 10px;">Submission Received!</h2>
+        <p style="color: #64748b; font-size: 1.2rem; font-weight: 600; margin-bottom: 40px;">Your work for <strong>{{ submission.assignment.title }}</strong> has been uploaded successfully.</p>
+
+        <div style="background: #f8fafc; border-radius: 25px; padding: 30px; margin-bottom: 40px; border: 2px dashed #e2e8f0;">
+            <h3 style="color: #475569; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px;">Quiz/Assignment Status</h3>
+            
+            {% if grade %}
+                <div style="font-size: 3rem; font-weight: 800; color: #84cc16;">{{ grade.marks }}%</div>
+                <p style="color: #64748b; font-weight: 600;">Grade: {{ grade.get_relative_grade.letter }}</p>
+            {% else %}
+                <div style="font-size: 1.5rem; font-weight: 800; color: #3b82f6;">Pending Review</div>
+                <p style="color: #64748b; font-weight: 600; margin-top: 5px;">Your teacher will grade this soon!</p>
+            {% endif %}
+        </div>
+
+        <div style="display: flex; gap: 20px; justify-content: center;">
+            <a href="{% url 'student_dashboard' %}" style="background: #1e293b; color: white; padding: 18px 35px; border-radius: 30px; font-weight: 800; text-decoration: none; font-size: 1.1rem; box-shadow: 0 10px 20px rgba(30, 41, 59, 0.2); transition: transform 0.2s;">
+                🏠 Back to Main Page
+            </a>
+            <a href="{% url 'student_assignments' %}" style="background: #f1f5f9; color: #475569; padding: 18px 35px; border-radius: 30px; font-weight: 800; text-decoration: none; font-size: 1.1rem; transition: background 0.2s;">
+                📚 View All Tasks
+            </a>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

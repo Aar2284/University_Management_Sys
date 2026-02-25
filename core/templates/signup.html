@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - UniManage</title>
+    <link rel="stylesheet" href="{% static 'css/login-signup.css' %}?v=3">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-card">
+            
+            <div class="auth-header">
+                <div style="font-size: 3.5rem; margin-bottom: 10px;">🚀</div>
+                <h1 class="auth-title">Join UniManage</h1>
+                <p class="auth-subtitle">Create your student portal account.</p>
+            </div>
+
+            <form method="POST" action="" class="auth-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="auth-btn" style="background: #10b981;">Create My Account</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <br><br> <a href="{% url 'login' %}">Log In Here</a></p>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniManage Portal</title>
+    
+    {% if user.is_authenticated %}
+        {% if user.is_teacher %}
+            <link rel="stylesheet" href="{% static 'css/teacher.css' %}?v=6">
+        {% else %}
+            <link rel="stylesheet" href="{% static 'css/student.css' %}?v=6">
+        {% endif %}
+    {% endif %}
+</head>
+
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+
+    {% if user.is_authenticated %}
+        <div class="dashboard-layout" style="display: flex; align-items: flex-start !important; min-height: 100vh;">
+            
+            <aside class="sidebar">
+                <div class="sidebar-brand" style="padding: 30px 20px; font-size: 1.5rem; font-weight: 800; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    🎓 UniManage
+                </div>
+                
+                <ul class="sidebar-menu" style="list-style: none; padding: 20px 0; margin: 0; display: flex; flex-direction: column; height: calc(100vh - 100px);">
+                    
+                    {% if user.is_teacher %}
+                        <li><a href="{% url 'teacher_dashboard' %}" class="{% if request.resolver_match.url_name == 'teacher_dashboard' %}active{% endif %}">📊 Dashboard</a></li>
+                        <li><a href="{% url 'take_attendance' %}" class="{% if request.resolver_match.url_name == 'take_attendance' %}active{% endif %}">📋 Attendance</a></li>
+                        <li><a href="{% url 'manage_grades' %}" class="{% if request.resolver_match.url_name == 'manage_grades' %}active{% endif %}">📝 Manage Grades</a></li>
+                        <li><a href="{% url 'teacher_submissions' %}" class="{% if request.resolver_match.url_name == 'teacher_submissions' %}active{% endif %}">📥 Submissions</a></li>
+                    {% else %}
+                        <li><a href="{% url 'student_dashboard' %}" class="{% if request.resolver_match.url_name == 'student_dashboard' %}active{% endif %}">🎓 My Dashboard</a></li>
+                        <li><a href="{% url 'student_attendance' %}" class="{% if request.resolver_match.url_name == 'student_attendance' %}active{% endif %}">📅 Attendance</a></li>
+                        <li><a href="{% url 'student_assignments' %}" class="{% if request.resolver_match.url_name == 'student_assignments' %}active{% endif %}">📝 Assignments</a></li>
+                    {% endif %}
+                    
+                    <div style="flex-grow: 1;"></div> 
+                    <li><a href="{% url 'logout' %}" style="color: #ffe4e6; font-weight: 800;">🚪 Logout</a></li>
+                </ul>
+            </aside>
+
+            <main class="main-content" style="margin-top: 0 !important; padding-top: 40px !important; display: block !important;">
+                {% block content %}
+                {% endblock %}
+            </main>
+
+        </div>
+    {% endif %}
+
+</body>
+</html>
