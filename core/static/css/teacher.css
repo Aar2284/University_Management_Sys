@@ -1,0 +1,589 @@
+/* =========================================
+   GLOBAL & CORE STYLES
+   ========================================= */
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    margin: 0; 
+    background-color: #5b6f7e; /* Dark slate for the premium app look */
+}
+
+.navbar { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    background: #2c3e50; 
+    color: white; 
+    padding: 15px 30px; 
+}
+
+.navbar a {
+    color: white; 
+    text-decoration: none; 
+    margin-left: 20px; 
+    font-weight: bold; 
+}
+
+.navbar a:hover { 
+    color: #3498db; 
+}
+
+.container { 
+    max-width: 1000px; 
+    margin: 40px auto; 
+    padding: 20px; 
+    background: white; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+}
+
+/* =========================================
+   AUTHENTICATION FORMS
+   ========================================= */
+.auth-container { 
+    max-width: 400px; 
+    margin: 0 auto; 
+    text-align: center; 
+}
+
+.auth-form { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+    text-align: left; 
+}
+
+.auth-form input { 
+    padding: 8px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    width: 100%; 
+    box-sizing: border-box; 
+}
+
+.btn-primary { 
+    background-color: #3498db; 
+    color: white; 
+    padding: 10px;
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-size: 16px; 
+    margin-top: 10px;
+}
+
+.btn-primary:hover { 
+    background-color: #2980b9; 
+}
+
+/* =========================================
+   TOAST NOTIFICATIONS
+   ========================================= */
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    color: white; 
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
+    font-size: 15px;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateX(100%); 
+    animation: slideInRight 0.4s ease-out forwards;
+}
+
+.toast.success { 
+    background-color: #27ae60; 
+}
+
+.toast.error { 
+    background-color: #e74c3c; 
+}
+
+@keyframes slideInRight {
+    to { 
+        opacity: 1; 
+        transform: translateX(0); 
+    }
+}
+
+.toast.hide { 
+    animation: fadeOutDown 0.5s ease-in forwards; 
+}
+
+@keyframes fadeOutDown {
+    to { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    }
+}
+
+/* =========================================
+   PREMIUM "CIRCLE" DASHBOARD UI (Teacher)
+   ========================================= */
+.app-container {
+    background: #ffffff;
+    border-radius: 32px;
+    width: 96%; 
+    max-width: 1600px; 
+    margin: 30px auto;
+    padding: 40px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    box-sizing: border-box; 
+}
+
+.pro-grid {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr; 
+    gap: 40px; 
+}
+
+@media (max-width: 1100px) {
+    .pro-grid {
+        grid-template-columns: 1fr; 
+    }
+}
+
+/* Hero Banner */
+.hero-banner {
+    background: linear-gradient(135deg, #44899c 0%, #7ca1a8 100%);
+    border-radius: 24px;
+    padding: 40px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 200px;
+}
+
+.hero-banner h1 { 
+    font-size: 2.5rem; 
+    margin: 0 0 10px 0; 
+}
+
+.hero-banner p { 
+    font-size: 1.1rem; 
+    opacity: 0.9; 
+    margin: 0 0 30px 0; 
+}
+
+.hero-actions { 
+    display: flex; 
+    gap: 15px; 
+}
+
+.btn-pill {
+    background: white; 
+    color: #44899c; 
+    padding: 12px 24px; 
+    border-radius: 30px;
+    font-weight: bold; 
+    text-decoration: none; 
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex; 
+    align-items: center; 
+    gap: 8px;
+}
+
+.btn-pill:hover { 
+    transform: translateY(-3px); 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+}
+
+/* =========================================
+   SIDEBAR & FULLSCREEN LAYOUT
+   ========================================= */
+.dashboard-layout {
+    display: block; /* Removed flexbox to stop it from fighting the fixed sidebar */
+    min-height: 100vh;
+    background-color: #5b6f7e;
+}
+
+/* (Keep your existing .sidebar, .sidebar-brand, and .sidebar-menu CSS exactly as they are) */
+
+.sidebar {
+    width: 260px;
+    background: #2c3e50;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    position: fixed; 
+    height: 100vh;
+    top: 0;
+    left: 0;
+    box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+    z-index: 100;
+}
+
+.sidebar-brand {
+    padding: 30px 20px;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: #ffffff;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 20px 0;
+    margin: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-menu li a {
+    display: flex;
+    align-items: center;
+    padding: 15px 30px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s;
+    font-size: 1.05rem;
+}
+
+.sidebar-menu li a:hover, .sidebar-menu li a.active {
+    background: rgba(255,255,255,0.05);
+    color: #ffffff;
+    border-left: 4px solid #3b82f6;
+}
+
+/* THE MAGIC LAYOUT FIXES ARE HERE */
+.main-content {
+    margin-left: 260px; /* Pushes content exactly past the sidebar */
+    width: calc(100% - 260px); /* Strictly limits width to the remaining screen space */
+    min-height: 100vh;
+    padding: 30px 40px;
+    box-sizing: border-box; /* Forces padding to stay inside the width limits */
+}
+
+.app-container {
+    background: #ffffff;
+    border-radius: 32px;
+    width: 100%; 
+    max-width: 1400px; /* Limits how wide the white box can get on giant monitors */
+    margin: 0 auto; /* Centers the white box perfectly inside the grey space */
+    padding: 40px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    box-sizing: border-box;
+}
+
+/* =========================================
+   DYNAMIC FILLING TROPHY CARD
+   ========================================= */
+.card-peach { 
+    background: #1e293b; /* Changed to Deep Navy/Slate */
+    border-radius: 24px; 
+    padding: 30px; 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+
+.trophy-display { 
+    display: flex; 
+    align-items: center; 
+    gap: 25px; 
+    margin-bottom: 25px; 
+}
+
+/* --- THE FILLING CUP VISUALIZATION --- */
+/* The empty container cup */
+.filling-cup-container {
+    position: relative;
+    width: 80px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+    border: 4px solid #e67e22; /* Orange border cup color */
+    border-top: none; /* Open top */
+    border-radius: 0 0 40px 40px; /* Rounded bottom like a cup/trough */
+    overflow: hidden; /* Hide the liquid that spills out */
+    box-shadow: 0 4px 10px rgba(230, 126, 34, 0.2);
+}
+
+/* The liquid inside that fills up */
+.cup-liquid {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    /* Height will be set dynamically in HTML */
+    background: linear-gradient(to top, #d35400, #e67e22); /* Dark orange gradient filling */
+    transition: height 1s ease-in-out; /* Smooth filling animation */
+    opacity: 0.8;
+}
+
+/* Optional: A little shine line on top of the liquid */
+.cup-liquid::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* --- Stats Text --- */
+.trophy-stats h2 { 
+    font-size: 3.5rem; 
+    color: #c1d9f1 !important;; 
+    margin: 0; 
+    line-height: 1; 
+}
+
+.trophy-stats p { 
+    color: #94a3b8; 
+    margin: 5px 0 0 0; 
+    font-weight: 600; 
+    text-transform: uppercase; 
+    font-size: 0.85rem; 
+    letter-spacing: 1px; 
+}
+
+.trophy-display { 
+    display: flex; 
+    align-items: center; 
+    gap: 20px; 
+    margin-bottom: 25px; 
+}
+
+.trophy-icon { 
+    font-size: 4.5rem; 
+    filter: drop-shadow(0 10px 10px rgba(230, 126, 34, 0.3)); 
+}
+
+.trophy-stats h2 { 
+    font-size: 3.5rem; 
+    color: #2c3e50; 
+    margin: 0; 
+    line-height: 1; 
+}
+
+.trophy-stats p { 
+    color: #d35400; 
+    margin: 5px 0 0 0; 
+    font-weight: 600; 
+    text-transform: uppercase; 
+    font-size: 0.85rem; 
+    letter-spacing: 1px; 
+}
+
+/* Secondary Layout Row */
+.pro-row { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 30px; 
+    margin-top: 30px; 
+}
+
+/* Standard Rounded Cards */
+.card-light { 
+    background: #f8fafc; 
+    border-radius: 24px; 
+    padding: 30px; 
+    border: 1px solid #f1f5f9; 
+}
+
+.card-title { 
+    color: #1e293b; 
+    font-size: 1.2rem; 
+    margin: 0 0 20px 0; 
+    font-weight: 700; 
+}
+
+/* Clean Form & Lists */
+.pro-input { 
+    width: 100%; 
+    padding: 12px; 
+    margin-bottom: 15px; 
+    border: 1px solid #cbd5e1; 
+    border-radius: 10px; 
+    background: white; 
+    box-sizing: border-box; 
+}
+
+.btn-solid { 
+    width: 100%; 
+    padding: 12px; 
+    background: #3b82f6; 
+    color: white; 
+    border: none; 
+    border-radius: 10px; 
+    font-weight: bold; 
+    cursor: pointer; 
+}
+
+.pro-list { 
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+}
+
+.pro-list li { 
+    padding: 12px 0; 
+    border-bottom: 1px solid #e2e8f0; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.pro-list li:last-child { 
+    border-bottom: none; 
+}
+
+.status-green { 
+    background: #dcfce7; 
+    color: #166534; 
+    padding: 4px 12px; 
+    border-radius: 20px; 
+    font-size: 0.8rem; 
+    font-weight: bold; 
+}
+
+.status-gray { 
+    background: #e2e8f0; 
+    color: #475569; 
+    padding: 4px 12px; 
+    border-radius: 20px; 
+    font-size: 0.8rem; 
+    font-weight: bold; 
+}
+
+/* =========================================
+   ATTENDANCE PAGE BUTTONS
+   ========================================= */
+.action-buttons { 
+    display: flex; 
+    gap: 10px; 
+    margin-top: 15px; 
+}
+
+.btn-present { 
+    background-color: #27ae60; 
+    color: white; 
+    border: none; 
+    padding: 10px 15px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-weight: bold; 
+    flex: 1;
+    transition: background-color 0.2s;
+}
+
+.btn-absent { 
+    background-color: #e74c3c; 
+    color: white; 
+    border: none; 
+    padding: 10px 15px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-weight: bold; 
+    flex: 1;
+    transition: background-color 0.2s;
+}
+
+.btn-present:hover { 
+    background-color: #219653; 
+}
+
+.btn-absent:hover { 
+    background-color: #c0392b; 
+}
+
+/* =========================================
+   ATTENDANCE CARD GRID
+   ========================================= */
+.attendance-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Forces exactly 4 cards per row */
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.student-attendance-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 25px 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.student-attendance-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+
+/* Dynamic Avatar Circle */
+.student-avatar {
+    width: 60px;
+    height: 60px;
+    background: #f1f5f9;
+    color: #475569;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0 auto 15px auto;
+    border: 2px solid #e2e8f0;
+}
+
+.student-name-att {
+    font-size: 1.15rem;
+    color: #1e293b;
+    margin: 0 0 5px 0;
+    font-weight: 700;
+}
+
+.student-roll-att {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0 0 20px 0;
+}
+
+/* Responsive: Shrink columns on smaller laptop/tablet screens */
+@media (max-width: 1024px) {
+    .attendance-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+    .attendance-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* =========================================
+   NEW 60/40 DASHBOARD GRID
+   ========================================= */
+.grid-60-40 {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr; /* This creates a 60% / 40% split */
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+/* Stack them vertically if the screen gets too small */
+@media (max-width: 1024px) {
+    .grid-60-40 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Modern Pill for the total students count */
+.pill-light {
+    background: #f1f5f9;
+    color: #475569;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9rem;
+}

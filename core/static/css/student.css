@@ -1,0 +1,221 @@
+/* =========================================
+   GLOBAL & CORE STYLES
+   ========================================= */
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    margin: 0; 
+    background-color: #5b6f7e; /* Dark slate for the premium app look */
+}
+
+.navbar { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    background: #2c3e50; 
+    color: white; 
+    padding: 15px 30px; 
+}
+
+.navbar a {
+    color: white; 
+    text-decoration: none; 
+    margin-left: 20px; 
+    font-weight: bold; 
+}
+
+.navbar a:hover { 
+    color: #3498db; 
+}
+
+.container { 
+    max-width: 1000px; 
+    margin: 40px auto; 
+    padding: 20px; 
+    background: white; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+}
+
+/* =========================================
+   FUNKY STUDENT DASHBOARD UI
+   ========================================= */
+.funky-app-container {
+    background: #ffffff;
+    border-radius: 40px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 50px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.funky-header 
+{
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;
+}
+
+.funky-grid-top 
+{
+    display: grid;
+    grid-template-columns: 1.2fr 1.5fr; /* 40/60 Split */
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+/* Left White Dashboard Card */
+.funky-left-card
+{
+    border: 2px solid #f1f5f9;
+    border-radius: 35px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Right 3 Tall Colorful Cards */
+.funky-stats-grid 
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.funky-tall-card 
+{
+    border-radius: 35px;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 220px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    transition: transform 0.2s;
+}
+
+.funky-tall-card:hover { transform: translateY(-5px); }
+
+.bg-lime { background: #84cc16; color: #1a2e05; }
+.bg-yellow { background: #fbbf24; color: #451a03; }
+.bg-coral { background: #ff8a65; color: #ffffff; }
+
+.funky-tall-card h2 
+{ 
+    font-size: 4rem; 
+    font-weight: 800; 
+    margin: 0; 
+    line-height: 1; 
+}
+
+.funky-tall-card p 
+{ 
+    font-size: 0.95rem; 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    margin-top: 15px; 
+    letter-spacing: 0.5px; 
+    opacity: 0.9; 
+}
+
+/* Bottom Pill Rows */
+.funky-pill-row 
+{
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    align-items: center;
+    padding: 15px 30px;
+    border-radius: 50px; /* Extreme pill shape */
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.pill-light-lime { background-color: #ecfccb; }
+.pill-light-yellow { background-color: #fefce8; }
+.pill-light-coral { background-color: #ffedd5; }
+    
+.pill-status-box 
+{
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 0.9rem;
+}
+
+body 
+{ 
+    margin: 0; 
+    background-color: #e2e8f0; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashboard-layout 
+{ 
+    display: flex; 
+    min-height: 100vh; 
+}
+
+.sidebar {
+    width: 260px;
+    background: #A67B5B; 
+    color: white;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+    z-index: 100;
+}
+
+.sidebar-brand 
+{ 
+    padding: 30px 20px; 
+    font-size: 1.5rem; 
+    font-weight: 800; 
+    text-align: center; 
+    border-bottom: 1px solid rgba(255,255,255,0.05); 
+}
+
+.sidebar-menu 
+{ 
+    list-style: none; 
+    padding: 20px 0; 
+    margin: 0; 
+    display: flex; 
+    flex-direction: column; 
+    flex: 1; 
+}
+
+.sidebar-menu li a 
+{ 
+    display: flex; 
+    align-items: center;
+    padding: 15px 30px; 
+    color: rgba(255, 255, 255, 0.85); 
+    text-decoration: none; 
+    font-weight: 600; 
+    font-size: 1.05rem; 
+    transition: all 0.2s; 
+}
+
+.sidebar-menu li a:hover, .sidebar-menu li a.active 
+{ 
+    color: #ffffff; 
+    background: rgba(255, 255, 255, 0.1); 
+    border-left: 5px solid #84cc16; 
+}
+
+.main-content 
+{
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    padding: 40px;
+    box-sizing: border-box;
+}
