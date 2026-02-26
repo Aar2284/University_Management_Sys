@@ -99,7 +99,7 @@ def student_dashboard(request):
         'attendance_records': recent_attendance,
     }
     
-    return render(request, 'core/student_side/student_dashboard.html', context)
+    return render(request, 'student_side/student_dashboard.html', context)
 
 # ==========================================
 # --- TEACHER VIEWS ---
@@ -147,7 +147,7 @@ def teacher_dashboard(request):
         'overall_avg_percentage': overall_avg_score,
         'subject_averages': subject_averages, 
     }
-    return render(request, 'core/teacher_side/teacher_dashboard.html', context)
+    return render(request, 'teacher_side/teacher_dashboard.html', context)
 
 
 # Make sure you import Subject, StudentProfile, and Attendance at the top of your views.py!
@@ -191,7 +191,7 @@ def take_attendance(request):
         'subjects': subjects,
         'students': students,
     }
-    return render(request, 'core/teacher_side/teacher_attendance.html', context)
+    return render(request, 'teacher_side/teacher_attendance.html', context)
 
 
 @login_required(login_url='login')
@@ -257,7 +257,7 @@ def manage_grades(request):
         'subjects': subjects,
         'students': students,
     }
-    return render(request, 'core/teacher_side/teacher_grades.html', context)
+    return render(request, 'teacher_side/teacher_grades.html', context)
 
 @login_required(login_url='login')
 def student_attendance(request):
@@ -280,7 +280,7 @@ def student_attendance(request):
         'attended_classes': attended_classes,
         'total_classes': total_classes
     }
-    return render(request, 'core/student_side/student_attendance.html', context)
+    return render(request, 'student_side/student_attendance.html', context)
 
 @login_required(login_url='login')
 def create_assignment(request):
@@ -322,7 +322,7 @@ def student_assignments(request):
         'assignments': assignments,
         'submitted_ids': submitted_ids, # Pass this to the template
     }
-    return render(request, 'core/student_side/student_assignments.html', context)
+    return render(request, 'student_side/student_assignments.html', context)
 
 # 2. ADD the new Upload View:
 @login_required(login_url='login')
@@ -351,27 +351,36 @@ def submission_success(request, submission_id):
         'submission': submission,
         'grade': grade
     }
-    return render(request, 'core/submission_success.html', context)
+    return render(request, 'student_side/submission_success.html', context)
 
 # 3. ADD the Teacher Submissions View:
 @login_required(login_url='login')
 def teacher_submissions(request):
-    # Keep students out
     if not request.user.is_teacher:
         return redirect('student_dashboard')
     
-    # 1. Identify exactly which teacher is logged in right now
     current_teacher = request.user.teacherprofile
-    
-    # 2. Filter the submissions so they only see their own!
-    submissions = Submission.objects.filter(
-        assignment__subject__teacher=current_teacher
-    ).order_by('-submitted_at')
+    # Get all submissions for assignments in subjects taught by this teacher
+    submissions = Submission.objects.filter(assignment__subject__teachersubjecthistory__teacher=current_teacher).order_by('-submitted_at')
     
     context = {
         'submissions': submissions
     }
-    return render(request, 'core/teacher_side/teacher_submissions.html', context)
+    return render(request, 'teacher_side/teacher_submissions.html', context)
+
+@login_required(login_url='login')
+def teacher_results(request):
+    if not request.user.is_teacher:
+        return redirect('student_dashboard')
+    
+    current_teacher = request.user.teacherprofile
+    # Get all grades for subjects taught by this teacher
+    grades = Grade.objects.filter(subject__teacher=current_teacher).order_by('subject', '-marks')
+    
+    context = {
+        'grades': grades
+    }
+    return render(request, 'teacher_side/teacher_results.html', context)
 
 def student_signup(request):
     # If they are already logged in, send them away
