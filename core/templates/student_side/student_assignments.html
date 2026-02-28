@@ -1,57 +1,61 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<div class="funky-app-container" style="background: #ffffff; border-radius: 40px; width: 100%; max-width: 1400px; margin: 0 auto; padding: 50px; box-shadow: 0 20px 50px rgba(0,0,0,0.05); box-sizing: border-box;">
+<div class="funky-app-container">
 
-    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 50px;">
+    <div class="funky-header-page">
         <div>
-            <h2 style="margin: 0; color: #1e293b; font-size: 2.5rem; font-weight: 800;">Pending Work</h2>
-            <p style="color: #64748b; font-size: 1.1rem; margin-top: 8px; font-weight: 600;">Manage and upload your assignments here.</p>
+            <h2>Pending Work</h2>
+            <p>Manage and upload your assignments here.</p>
         </div>
-        <div style="font-size: 4rem; line-height: 1;">📝</div>
+        <div class="funky-emoji">📝</div>
     </div>
 
     <div>
         {% if assignments %}
-            {% for assignment in assignments %}
-                <div style="display: flex; justify-content: space-between; align-items: center; background: {% cycle '#fefce8' '#ffedd5' '#ecfccb' %}; padding: 25px 35px; border-radius: 35px; margin-bottom: 20px; transition: transform 0.2s;">
-                    
-                    <div style="display: flex; align-items: center; gap: 20px;">
-                        <div style="width: 55px; height: 55px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                            📌
-                        </div>
-                        <div>
-                            <h3 style="margin: 0; color: #1e293b; font-size: 1.3rem; font-weight: 800;">{{ assignment.title }}</h3>
-                            <p style="margin: 5px 0 0 0; color: #64748b; font-weight: 600; font-size: 0.95rem;">
-                                {{ assignment.subject.name }} &nbsp;•&nbsp; <span style="color: #ef4444;">Due: {{ assignment.due_date|date:"M d, Y" }}</span>
-                            </p>
-                        </div>
-                    </div>
+        {% for assignment in assignments %}
+        <div class="funky-assignment-row {% cycle 'bg-yellow' 'bg-coral' 'bg-lime' %}">
 
-                    <div>
-                        {% if assignment.id in submitted_ids %}
-                            <div style="background: #dcfce7; color: #166534; padding: 14px 28px; border-radius: 25px; font-weight: 800; font-size: 1rem; display: inline-block; box-shadow: 0 4px 10px rgba(22, 101, 52, 0.1);">
-                                ✅ Submitted
-                            </div>
-                        {% else %}
-                            <form action="{% url 'submit_work' assignment.id %}" method="POST" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <label style="background: #3b82f6; color: white; padding: 14px 28px; border-radius: 25px; font-weight: 800; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); transition: background 0.2s; display: inline-block;">
-                                    Upload Work
-                                    <input type="file" name="pdf_file" accept=".pdf" style="display: none;" onchange="this.form.submit()">
-                                </label>
-                            </form>
-                        {% endif %}
-                    </div>
-                    
+            <div class="funky-record-info">
+                <div class="funky-record-icon">
+                    📌
                 </div>
-            {% endfor %}
-        {% else %}
-            <div style="text-align: center; padding: 60px; background: #f8fafc; border-radius: 35px; border: 2px dashed #cbd5e1;">
-                <span style="font-size: 4rem;">🎉</span>
-                <h3 style="color: #1e293b; margin-top: 20px; font-size: 1.5rem;">All caught up!</h3>
-                <p style="color: #64748b; font-weight: 600;">You have no pending assignments right now.</p>
+                <div>
+                    <h3>{{ assignment.title }}</h3>
+                    <p>
+                        {{ assignment.subject.name }} &nbsp;•&nbsp;
+                        <span class="due-date">Due: {{ assignment.due_date|date:"M d, Y" }}</span>
+                    </p>
+                </div>
             </div>
+
+            <div>
+                {% if assignment.id in submitted_ids %}
+                <div
+                    style="background: #dcfce7; color: #166534; padding: 14px 28px; border-radius: 25px; font-weight: 800; font-size: 1rem; display: inline-block; box-shadow: 0 4px 10px rgba(22, 101, 52, 0.1);">
+                    ✅ Submitted
+                </div>
+                {% else %}
+                <form action="{% url 'submit_work' assignment.id %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label
+                        style="background: #3b82f6; color: white; padding: 14px 28px; border-radius: 25px; font-weight: 800; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); transition: background 0.2s; display: inline-block;">
+                        Upload Work
+                        <input type="file" name="pdf_file" accept=".pdf" style="display: none;"
+                            onchange="this.form.submit()">
+                    </label>
+                </form>
+                {% endif %}
+            </div>
+
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="funky-empty-state">
+            <span>🎉</span>
+            <h3>All caught up!</h3>
+            <p>You have no pending assignments right now.</p>
+        </div>
         {% endif %}
     </div>
 

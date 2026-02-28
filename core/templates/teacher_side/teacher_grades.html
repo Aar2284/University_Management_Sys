@@ -4,40 +4,63 @@
 <style>
     /* Styling for our custom form inputs */
     .grade-form-container label {
-        display: block; font-weight: 800; margin-bottom: 10px; color: #475569; font-size: 1.05rem;
+        display: block;
+        font-weight: 800;
+        margin-bottom: 10px;
+        color: var(--text-muted);
+        font-size: 1.05rem;
     }
-    .grade-form-container select, .grade-form-container input {
-        width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #e2e8f0; font-size: 1rem; color: #1e293b; font-weight: 600; outline: none; box-sizing: border-box; background-color: #f8fafc; transition: all 0.2s ease; margin-bottom: 25px;
+
+    .grade-form-container select,
+    .grade-form-container input {
+        width: 100%;
+        padding: 15px;
+        border-radius: 12px;
+        border: 2px solid var(--border-color);
+        font-size: 1rem;
+        color: var(--text-main);
+        font-weight: 600;
+        outline: none;
+        box-sizing: border-box;
+        background-color: var(--app-bg);
+        transition: all 0.2s ease;
+        margin-bottom: 25px;
     }
-    .grade-form-container select:focus, .grade-form-container input:focus {
-        border-color: #3b82f6; background-color: #ffffff; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+
+    .grade-form-container select:focus,
+    .grade-form-container input:focus {
+        border-color: #3b82f6;
+        background-color: var(--card-bg);
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
     }
 </style>
 
 <div class="app-container">
-    
+
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
         <div>
-            <h2 style="margin: 0; color: #1e293b; font-size: 2.5rem;">Manage Grades</h2>
-            <p style="color: #64748b; margin: 8px 0 0 0; font-size: 1.1rem;">Record and update marks for your assigned subjects.</p>
+            <h2 style="margin: 0; color: var(--text-main); font-size: 2.5rem;">Manage Grades</h2>
+            <p style="color: var(--text-muted); margin: 8px 0 0 0; font-size: 1.1rem;">Record and update marks for your
+                assigned subjects.</p>
         </div>
         <div style="font-size: 4rem; line-height: 1;">💯</div>
     </div>
 
-    <div class="card-light grade-form-container" style="padding: 40px; background: white; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); max-width: 650px; margin: 0 auto;">
-        
-        <div style="border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 30px;">
-            <h3 style="margin: 0; color: #1e293b; font-size: 1.5rem;">Student Grading Form</h3>
+    <div class="card-light grade-form-container"
+        style="padding: 40px; background: var(--card-bg); border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); max-width: 650px; margin: 0 auto;">
+
+        <div style="border-bottom: 2px solid var(--border-color); padding-bottom: 15px; margin-bottom: 30px;">
+            <h3 style="margin: 0; color: var(--text-main); font-size: 1.5rem;">Student Grading Form</h3>
         </div>
 
         <form method="POST" action="">
             {% csrf_token %}
-            
+
             <label>📚 Select Subject</label>
             <select name="subject" required>
                 <option value="" disabled selected>-- Choose a Subject --</option>
                 {% for subject in subjects %}
-                    <option value="{{ subject.id }}">{{ subject.name }}</option>
+                <option value="{{ subject.id }}">{{ subject.name }}</option>
                 {% endfor %}
             </select>
 
@@ -45,17 +68,20 @@
             <select name="student" required>
                 <option value="" disabled selected>-- Choose a Student --</option>
                 {% for student in students %}
-                    <option value="{{ student.id }}">{{ student.user.username }}</option>
+                <option value="{{ student.user_id }}">{{ student.user.username }}</option>
                 {% endfor %}
             </select>
 
             <label>🎯 Marks Achieved</label>
             <input type="number" step="0.01" name="marks" required placeholder="e.g., 85.5">
-            
+
             <div style="margin-top: 40px; display: flex; justify-content: space-between; align-items: center;">
-                <a href="{% url 'teacher_dashboard' %}" style="color: #64748b; text-decoration: none; font-weight: bold; padding: 10px;">← Back</a>
-                
-                <button type="submit" style="background: #3b82f6; color: white; border: none; padding: 16px 35px; border-radius: 30px; font-weight: 800; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); transition: transform 0.2s;">
+                <a href="{% url 'teacher_dashboard' %}"
+                    style="color: var(--text-muted); text-decoration: none; font-weight: bold; padding: 10px;">←
+                    Back</a>
+
+                <button type="submit"
+                    style="background: #3b82f6; color: white; border: none; padding: 16px 35px; border-radius: 30px; font-weight: 800; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); transition: transform 0.2s;">
                     💾 Save Grade
                 </button>
             </div>

@@ -2,77 +2,87 @@
 
 {% block content %}
 <div class="app-container">
-    
+
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
         <div>
-            <h2 style="margin: 0; color: #1e293b; font-size: 2.5rem;">Take Attendance</h2>
-            <p style="color: #64748b; margin: 8px 0 0 0; font-size: 1.1rem;">Mark student presence for your active classes.</p>
+            <h2 style="margin: 0; color: var(--text-main); font-size: 2.5rem;">Take Attendance</h2>
+            <p style="color: var(--text-muted); margin: 8px 0 0 0; font-size: 1.1rem;">Mark student presence for your
+                active classes.</p>
         </div>
         <div style="font-size: 4rem; line-height: 1;">📋</div>
     </div>
 
-    <div class="card-light" style="padding: 40px; background: white; border-radius: 24px; box-shadow: 0 10px 20px rgba(0,0,0,0.03);">
-        
+    <div class="card-light"
+        style="padding: 40px; background: var(--card-bg); border-radius: 24px; box-shadow: 0 10px 20px rgba(0,0,0,0.03);">
+
         <form method="POST" action="">
             {% csrf_token %}
-            
+
             <div style="display: flex; gap: 30px; margin-bottom: 40px;">
-                
+
                 <div style="flex: 1;">
-                    <label style="display: block; font-weight: 800; margin-bottom: 10px; color: #475569;">📚 Select Subject</label>
-                    <select name="subject" required style="width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #e2e8f0; font-size: 1rem; color: #1e293b; font-weight: 600; outline: none;">
+                    <label style="display: block; font-weight: 800; margin-bottom: 10px; color: var(--text-muted);">📚
+                        Select Subject</label>
+                    <select name="subject" required
+                        style="background: var(--app-bg); width: 100%; padding: 15px; border-radius: 12px; border: 2px solid var(--border-color); font-size: 1rem; color: var(--text-main); font-weight: 600; outline: none;">
                         <option value="" disabled selected>-- Choose a Subject --</option>
                         {% for subject in subjects %}
-                            <option value="{{ subject.id }}">{{ subject.name }}</option>
+                        <option value="{{ subject.id }}">{{ subject.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
-                
+
                 <div style="flex: 1;">
-                    <label style="display: block; font-weight: 800; margin-bottom: 10px; color: #475569;">📅 Class Date</label>
-                    <input type="date" name="date" required style="width: 100%; padding: 13px 15px; border-radius: 12px; border: 2px solid #e2e8f0; font-size: 1rem; color: #1e293b; font-weight: 600; outline: none; box-sizing: border-box;">
+                    <label style="display: block; font-weight: 800; margin-bottom: 10px; color: var(--text-muted);">📅
+                        Class Date</label>
+                    <input type="date" name="date" required
+                        style="background: var(--app-bg); width: 100%; padding: 13px 15px; border-radius: 12px; border: 2px solid var(--border-color); font-size: 1rem; color: var(--text-main); font-weight: 600; outline: none; box-sizing: border-box;">
                 </div>
 
             </div>
 
-            <div style="background: #f8fafc; border-radius: 16px; padding: 20px; border: 1px solid #f1f5f9; margin-bottom: 40px;">
+            <div
+                style="background: var(--app-bg); border-radius: 16px; padding: 20px; border: 1px solid var(--card-border); margin-bottom: 40px;">
                 <table style="width: 100%; border-collapse: collapse; text-align: left;">
                     <thead>
-                        <tr style="border-bottom: 2px solid #e2e8f0; color: #64748b;">
+                        <tr style="border-bottom: 2px solid var(--border-color); color: var(--text-muted);">
                             <th style="padding: 15px; font-size: 1.1rem;">Student Name</th>
                             <th style="padding: 15px; text-align: right; font-size: 1.1rem;">Attendance Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% if students %}
-                            {% for student in students %}
-                            <tr style="border-bottom: 1px solid #e2e8f0;">
-                                <td style="padding: 15px; font-weight: bold; color: #1e293b; font-size: 1.1rem;">
-                                    👤 {{ student.user.username }}
-                                </td>
-                                <td style="padding: 15px; text-align: right;">
-                                    <select name="student_{{ student.id }}" style="padding: 10px 20px; border-radius: 20px; border: 2px solid #cbd5e1; font-weight: 800; font-size: 1rem; outline: none; cursor: pointer;">
-                                        <option value="P">✅ Present</option>
-                                        <option value="A">❌ Absent</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            {% endfor %}
+                        {% for student in students %}
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 15px; font-weight: bold; color: var(--text-main); font-size: 1.1rem;">
+                                👤 {{ student.user.username }}
+                            </td>
+                            <td style="padding: 15px; text-align: right;">
+                                <select name="student_{{ student.user_id }}"
+                                    style="background: var(--card-bg); color: var(--text-main); padding: 10px 20px; border-radius: 20px; border: 2px solid var(--border-color); font-weight: 800; font-size: 1rem; outline: none; cursor: pointer;">
+                                    <option value="P">✅ Present</option>
+                                    <option value="A">❌ Absent</option>
+                                </select>
+                            </td>
+                        </tr>
+                        {% endfor %}
                         {% else %}
-                            <tr>
-                                <td colspan="2" style="text-align: center; padding: 40px; color: #64748b; font-weight: bold;">
-                                    No students found in the database!
-                                </td>
-                            </tr>
+                        <tr>
+                            <td colspan="2"
+                                style="text-align: center; padding: 40px; color: var(--text-muted); font-weight: bold;">
+                                No students found in the database!
+                            </td>
+                        </tr>
                         {% endif %}
                     </tbody>
                 </table>
             </div>
 
-            <button type="submit" style="background: #3b82f6; color: white; border: none; padding: 16px 35px; border-radius: 30px; font-weight: 800; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); transition: transform 0.2s;">
+            <button type="submit"
+                style="background: #3b82f6; color: white; border: none; padding: 16px 35px; border-radius: 30px; font-weight: 800; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); transition: transform 0.2s;">
                 💾 Save Attendance Records
             </button>
-            
+
         </form>
     </div>
 

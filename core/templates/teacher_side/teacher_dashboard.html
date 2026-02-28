@@ -1,12 +1,26 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
+<style>
+    .text-emerald-500 {
+        color: #10b981;
+    }
+
+    .text-amber-500 {
+        color: #f59e0b;
+    }
+
+    .text-red-500 {
+        color: #e74c3c;
+    }
+</style>
 <div class="app-container">
 
     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px;">
         <div>
-            <h2 style="margin: 0; color: #1e293b; font-size: 2.2rem;">Welcome back, {{ user.username }}</h2>
-            <p style="color: #64748b; margin: 8px 0 0 0; font-size: 1.1rem;">You have {{ active_subjects_count }} active subjects to manage today.</p>
+            <h2 style="margin: 0; color: var(--text-main); font-size: 2.2rem;">Welcome back, {{ user.username }}</h2>
+            <p style="color: var(--text-muted); margin: 8px 0 0 0; font-size: 1.1rem;">You have {{ active_subjects_count
+                }} active subjects to manage today.</p>
         </div>
         <span class="pill-light">{{ total_students }} Total Students</span>
     </div>
@@ -15,63 +29,68 @@
 
         <div class="card-peach">
             <div class="trophy-display">
-                
+
                 <div class="dynamic-trophy-wrapper">
                     <div style="position: relative; width: 80px; height: 80px;">
-                        
-                        <svg viewBox="0 0 512 512" width="80" height="80" fill="#ffffff" style="position: absolute; top: 0; left: 0;">
-                            <path d="M400 0H112C49.9 0 0 49.9 0 112c0 51.8 35 95 83.1 108.6C103.8 281.3 158 320 224 320v32c-53 0-96 43-96 96v32h256v-32c0-53-43-96-96-96v-32c66 0 120.2-38.7 140.9-99.4C477 207 512 163.8 512 112c0-62.1-49.9-112-112-112zM112 160c-26.5 0-48-21.5-48-48s21.5-48 48-48h16v96h-16zm288 0h-16V64h16c26.5 0 48 21.5 48 48s-21.5 48-48 48z"/>
+
+                        <svg viewBox="0 0 512 512" width="80" height="80" fill="#ffffff"
+                            style="position: absolute; top: 0; left: 0;">
+                            <path
+                                d="M400 0H112C49.9 0 0 49.9 0 112c0 51.8 35 95 83.1 108.6C103.8 281.3 158 320 224 320v32c-53 0-96 43-96 96v32h256v-32c0-53-43-96-96-96v-32c66 0 120.2-38.7 140.9-99.4C477 207 512 163.8 512 112c0-62.1-49.9-112-112-112zM112 160c-26.5 0-48-21.5-48-48s21.5-48 48-48h16v96h-16zm288 0h-16V64h16c26.5 0 48 21.5 48 48s-21.5 48-48 48z" />
                         </svg>
 
-                        <div style="position: absolute; bottom: 0; left: 0; width: 80px; height: {{ overall_avg_percentage|default:0 }}%; overflow: hidden;">
-                            <svg viewBox="0 0 512 512" width="80" height="80" fill="#f59e0b" style="position: absolute; bottom: 0; left: 0;">
-                                <path d="M400 0H112C49.9 0 0 49.9 0 112c0 51.8 35 95 83.1 108.6C103.8 281.3 158 320 224 320v32c-53 0-96 43-96 96v32h256v-32c0-53-43-96-96-96v-32c66 0 120.2-38.7 140.9-99.4C477 207 512 163.8 512 112c0-62.1-49.9-112-112-112zM112 160c-26.5 0-48-21.5-48-48s21.5-48 48-48h16v96h-16zm288 0h-16V64h16c26.5 0 48 21.5 48 48s-21.5 48-48 48z"/>
+                        <div id="dashboard-trophy-fill"
+                            style="position: absolute; bottom: 0; left: 0; width: 80px; height: 0%; overflow: hidden;">
+                            <svg viewBox="0 0 512 512" width="80" height="80" fill="#f59e0b"
+                                style="position: absolute; bottom: 0; left: 0;">
+                                <path
+                                    d="M400 0H112C49.9 0 0 49.9 0 112c0 51.8 35 95 83.1 108.6C103.8 281.3 158 320 224 320v32c-53 0-96 43-96 96v32h256v-32c0-53-43-96-96-96v-32c66 0 120.2-38.7 140.9-99.4C477 207 512 163.8 512 112c0-62.1-49.9-112-112-112zM112 160c-26.5 0-48-21.5-48-48s21.5-48 48-48h16v96h-16zm288 0h-16V64h16c26.5 0 48 21.5 48 48s-21.5 48-48 48z" />
                             </svg>
                         </div>
+                        <script>document.getElementById('dashboard-trophy-fill').style.height = "{{ overall_avg_percentage|default:0 }}%";</script>
 
                     </div>
                 </div>
-                
+
                 <div class="trophy-stats">
                     <h2>{{ overall_avg_percentage }}%</h2>
                     <p>Overall Score (Active Subjects)</p>
                 </div>
             </div>
 
-            <div style="background: white; border-radius: 16px; padding: 20px;">
-                <h4 style="margin: 0 0 15px 0; color: #1e293b;">Active Subject Averages</h4>
+            <div
+                style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px;">
+                <h4 style="margin: 0 0 15px 0; color: var(--text-main);">Active Subject Averages</h4>
                 {% if subject_averages %}
-                    <ul class="pro-list">
-                        {% for subject_data in subject_averages %}
-                        <li {% if forloop.last %}style="border-bottom: none; padding-bottom: 0;"{% endif %}>
-                            <strong style="color: #334155;">{{ subject_data.subject_code }}</strong> 
-                            <span style="font-weight: bold; 
-                                {% if subject_data.average >= 80 %}color: #10b981;
-                                {% elif subject_data.average >= 60 %}color: #f59e0b;
-                                {% else %}color: #e74c3c;
-                                {% endif %}">
-                                {{ subject_data.average }}%
-                            </span>
-                        </li>
-                        {% endfor %}
-                    </ul>
+                <ul class="pro-list">
+                    {% for subject_data in subject_averages %}
+                    <li {% if forloop.last %}style="border-bottom: none; padding-bottom: 0;" {% endif %}>
+                        <strong style="color: var(--text-main);">{{ subject_data.subject_code }}</strong>
+                        <span style="font-weight: bold;"
+                            class="{% if subject_data.average >= 80 %}text-emerald-500{% elif subject_data.average >= 60 %}text-amber-500{% else %}text-red-500{% endif %}">
+                            {{ subject_data.average }}%
+                        </span>
+                    </li>
+                    {% endfor %}
+                </ul>
                 {% else %}
-                     <p style="color: #64748b; font-size: 0.9em;">No grades in active subjects yet.</p>
+                <p style="color: var(--text-muted); font-size: 0.9em;">No grades in active subjects yet.</p>
                 {% endif %}
             </div>
         </div>
 
         <div class="card-light">
             <h3 class="card-title">Assign Work</h3>
-            <form method="POST" action="{% url 'create_assignment' %}"> 
+            <form method="POST" action="{% url 'create_assignment' %}">
                 {% csrf_token %}
                 <input type="text" name="title" placeholder="Assignment Title" required class="pro-input">
                 <select name="subject_id" required class="pro-input">
                     <option value="" disabled selected>Select Subject</option>
                     {% for history in subjects %}
-                        {% if history.is_active %}
-                            <option value="{{ history.subject.id }}">{{ history.subject.name }} ({{ history.subject.code }})</option>
-                        {% endif %}
+                    {% if history.is_active %}
+                    <option value="{{ history.subject.id }}">{{ history.subject.name }} ({{ history.subject.code }})
+                    </option>
+                    {% endif %}
                     {% endfor %}
                 </select>
                 <input type="date" name="due_date" required class="pro-input">
@@ -84,23 +103,25 @@
     <div class="card-light">
         <h3 class="card-title">Subject Roster</h3>
         {% if subjects %}
-            <ul class="pro-list" style="display: flex; flex-direction: column; gap: 15px;">
+        <ul class="pro-list" style="display: flex; flex-direction: column; gap: 15px;">
             {% for history in subjects %}
-                <li style="border: 1px solid #e2e8f0; border-left: 5px solid #44899c; border-radius: 12px; padding: 15px 20px; background: #f4f7f9;">
-                    <div>
-                        <strong style="color: #1e293b; font-size: 1.1rem; display: block;">{{ history.subject.name }}</strong> 
-                        <span style="color: #64748b; font-size: 0.9rem;">{{ history.subject.code }}</span>
-                    </div>
-                    {% if history.is_active %}
-                        <span class="status-green">Active</span>
-                    {% else %}
-                        <span class="status-gray">Past</span>
-                    {% endif %}
-                </li>
+            <li
+                style="border: 1px solid var(--card-border); border-left: 5px solid #44899c; border-radius: 12px; padding: 15px 20px; background: var(--card-bg);">
+                <div>
+                    <strong style="color: var(--text-main); font-size: 1.1rem; display: block;">{{ history.subject.name
+                        }}</strong>
+                    <span style="color: var(--text-muted); font-size: 0.9rem;">{{ history.subject.code }}</span>
+                </div>
+                {% if history.is_active %}
+                <span class="status-green">Active</span>
+                {% else %}
+                <span class="status-gray">Past</span>
+                {% endif %}
+            </li>
             {% endfor %}
-            </ul>
+        </ul>
         {% else %}
-            <p style="color: #64748b;">No subjects assigned yet.</p>
+        <p style="color: var(--text-muted);">No subjects assigned yet.</p>
         {% endif %}
     </div>
 

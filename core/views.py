@@ -170,7 +170,7 @@ def take_attendance(request):
         for student in students:
             # The HTML form will send variables like 'student_1', 'student_2', etc.
             # Default to 'A' (Absent) if nothing is found
-            status = request.POST.get(f'student_{student.id}', 'A') 
+            status = request.POST.get(f'student_{student.user_id}', 'A') 
             
             # Create or update the attendance record
             Attendance.objects.update_or_create(
@@ -239,7 +239,7 @@ def manage_grades(request):
         marks = request.POST.get('marks')
         
         subject = Subject.objects.get(id=subject_id)
-        student = StudentProfile.objects.get(id=student_id)
+        student = StudentProfile.objects.get(user_id=student_id)
         
         # Create or update the student's grade
         Grade.objects.update_or_create(

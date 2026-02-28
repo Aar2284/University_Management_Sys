@@ -3,47 +3,49 @@
 {% block content %}
 <div class="funky-app-container">
 
-    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px;">
-        <h2 style="margin: 0; color: #1e293b; font-size: 2.5rem; font-weight: 800;">Attendance History</h2>
-        <span style="color: #64748b; font-weight: bold; font-size: 1.1rem;">{{ attended_classes }} / {{ total_classes }} Classes Attended</span>
+    <div class="funky-header-page">
+        <h2>Attendance History</h2>
+        <span>{{ attended_classes }} / {{ total_classes }} Classes Attended</span>
     </div>
 
     <div class="health-bar-bg">
-        <div class="health-bar-fill {% if health_percentage < 75 %}health-danger{% endif %}" style="width: {{ health_percentage|default:100 }}%;">
-            {{ health_percentage|default:100 }}% Health
+        <div class="health-bar-fill {% if health_percentage < 75 %}health-danger{% endif %}" id="attendance-health-bar"
+            style="width: 0%;">
+            {{ health_percentage|default_if_none:100 }}% Health
         </div>
+        <script>document.getElementById('attendance-health-bar').style.width = "{{ health_percentage|default_if_none:100 }}%";</script>
     </div>
 
     <div style="margin-top: 40px;">
         {% if attendance_records %}
-            {% for record in attendance_records %}
-                <div class="funky-pill-row {% cycle 'pill-light-lime' 'pill-light-yellow' 'pill-light-coral' %}">
-                    
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div style="width: 45px; height: 45px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">📅</div>
-                        <div>
-                            <div style="font-size: 1.1rem;">{{ record.subject.name }}</div>
-                            <div style="color: #64748b; font-size: 0.85rem; font-weight: normal;">{{ record.date|date:"l, M d, Y" }}</div>
-                        </div>
-                    </div>
+        {% for record in attendance_records %}
+        <div class="funky-pill-row {% cycle 'pill-light-lime' 'pill-light-yellow' 'pill-light-coral' %}">
 
-                    <div style="color: #64748b; text-align: center;">Status Logged</div>
-
-                    <div style="display: flex; justify-content: flex-end;">
-                        {% if record.status == 'P' %}
-                            <div class="pill-status-box bg-lime" style="width: 120px;">Present</div>
-                        {% else %}
-                            <div class="pill-status-box bg-coral" style="width: 120px;">Absent</div>
-                        {% endif %}
-                    </div>
-
+            <div class="funky-record-info">
+                <div class="funky-record-icon">📅</div>
+                <div>
+                    <div class="funky-record-name">{{ record.subject.name }}</div>
+                    <div class="funky-record-date">{{ record.date|date:"l, M d, Y" }}</div>
                 </div>
-            {% endfor %}
-        {% else %}
-            <div style="text-align: center; padding: 40px; background: #f8fafc; border-radius: 30px;">
-                <span style="font-size: 3rem;">🎒</span>
-                <p style="color: #64748b; font-weight: bold; margin-top: 15px;">No attendance records logged yet.</p>
             </div>
+
+            <div style="color: #64748b; text-align: center;">Status Logged</div>
+
+            <div style="display: flex; justify-content: flex-end;">
+                {% if record.status == 'P' %}
+                <div class="pill-status-box bg-lime" style="width: 120px;">Present</div>
+                {% else %}
+                <div class="pill-status-box bg-coral" style="width: 120px;">Absent</div>
+                {% endif %}
+            </div>
+
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="funky-empty-state">
+            <span>🎒</span>
+            <p>No attendance records logged yet.</p>
+        </div>
         {% endif %}
     </div>
 
