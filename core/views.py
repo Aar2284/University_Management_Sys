@@ -3,7 +3,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from streamlit import form
 from .forms import StudentSignUpForm
 from django.utils import timezone
 from .models import User, StudentProfile, Attendance, TeacherSubjectHistory, Grade, Subject, Assignment, Submission
