@@ -1,0 +1,78 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<style>
+    .risk-high { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
+    .risk-medium { background: #fef3c7; color: #d97706; border: 1px solid #fcd34d; }
+    .risk-low { background: #d1fae5; color: #059669; border: 1px solid #6ee7b7; }
+    .risk-bar { height: 8px; border-radius: 4px; background: #e5e7eb; overflow: hidden; }
+    .risk-bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+    .stat-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 24px; text-align: center; }
+    .stat-card h3 { margin: 0; font-size: 2.2rem; }
+    .stat-card p { margin: 8px 0 0 0; color: var(--text-muted); font-size: 0.9rem; }
+</style>
+
+<div class="app-container">
+    <div style="margin-bottom: 30px;">
+        <h2 style="margin: 0; color: var(--text-main); font-size: 2rem;">Student Risk Analysis</h2>
+        <p style="color: var(--text-muted); margin: 8px 0 0 0;">ML-powered predictions based on attendance and grades</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px;">
+        <div class="stat-card">
+            <h3 style="color: #dc2626;">{{ high_risk.count }}</h3>
+            <p>High Risk</p>
+        </div>
+        <div class="stat-card">
+            <h3 style="color: #d97706;">{{ medium_risk.count }}</h3>
+            <p>Medium Risk</p>
+        </div>
+        <div class="stat-card">
+            <h3 style="color: #059669;">{{ low_risk.count }}</h3>
+            <p>Low Risk</p>
+        </div>
+    </div>
+
+    <div class="card-light">
+        <h3 class="card-title">All Students ({{ total_students }})</h3>
+
+        {% if risk_data %}
+        <ul class="pro-list" style="display: flex; flex-direction: column; gap: 12px;">
+            {% for item in risk_data %}
+            <li style="border: 1px solid var(--card-border); border-radius: 12px; padding: 18px 22px; background: var(--card-bg); display: flex; justify-content: space-between; align-items: center;">
+                <div style="flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <strong style="color: var(--text-main); font-size: 1.05rem;">{{ item.student.user.username }}</strong>
+                        <span style="color: var(--text-muted); font-size: 0.85rem;">Roll: {{ item.student.roll_number }}</span>
+                        <span style="padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+                            {% if item.risk_level == 'high' %} class="risk-high"
+                            {% elif item.risk_level == 'medium' %} class="risk-medium"
+                            {% else %} class="risk-low{% endif %}">
+                            {{ item.risk_level|upper }}
+                        </span>
+                    </div>
+                    <div style="display: flex; gap: 30px; color: var(--text-muted); font-size: 0.85rem;">
+                        <span>Attendance: {{ item.attendance_pct }}%</span>
+                        <span>Avg Marks: {{ item.avg_marks }}</span>
+                        <span>Failing: {{ item.failing_subjects }} subject{{ item.failing_subjects|pluralize }}</span>
+                    </div>
+                </div>
+                <div style="width: 120px; margin-left: 20px;">
+                    <div class="risk-bar">
+                        <div class="risk-bar-fill" style="width: {{ item.risk_score }}%;
+                            {% if item.risk_level == 'high' %} background: #dc2626;
+                            {% elif item.risk_level == 'medium' %} background: #d97706;
+                            {% else %} background: #059669;{% endif %}">
+                        </div>
+                    </div>
+                    <div style="text-align: right; font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">{{ item.risk_score }}%</div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p style="color: var(--text-muted);">No risk data available. Run the training model first.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
