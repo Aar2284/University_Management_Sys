@@ -38,6 +38,7 @@
                         <li><a href="{% url 'manage_grades' %}" class="{% if request.resolver_match.url_name == 'manage_grades' %}active{% endif %}">📝 Manage Grades</a></li>
                         <li><a href="{% url 'teacher_submissions' %}" class="{% if request.resolver_match.url_name == 'teacher_submissions' %}active{% endif %}">📥 Submissions</a></li>
                         <li><a href="{% url 'at_risk_students' %}" class="{% if request.resolver_match.url_name == 'at_risk_students' %}active{% endif %}">⚠️ At-Risk Students</a></li>
+                        <li><a href="{% url 'live_dashboard' %}" class="{% if request.resolver_match.url_name == 'live_dashboard' %}active{% endif %}">📈 Live Dashboard</a></li>
                     {% else %}
                         <li><a href="{% url 'student_dashboard' %}" class="{% if request.resolver_match.url_name == 'student_dashboard' %}active{% endif %}">🎓 My Dashboard</a></li>
                         <li><a href="{% url 'student_attendance' %}" class="{% if request.resolver_match.url_name == 'student_attendance' %}active{% endif %}">📅 Attendance</a></li>
