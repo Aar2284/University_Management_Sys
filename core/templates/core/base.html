@@ -9,6 +9,7 @@
     <script src="{% static 'js/theme-init.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/theme.css' %}">
     <script src="{% static 'js/theme.js' %}" defer></script>
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 
     {% if user.is_authenticated %}
         {% if user.is_teacher %}
